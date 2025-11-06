@@ -4,6 +4,7 @@ from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.platypus import SimpleDocTemplate
 from alcohol_analysis_functions import add_alcohol_analysis_section_to_pdf
 from boxplot_functions import add_boxplot_section_to_pdf
+from catplot_analysis_functions import add_catplot_analysis_section_to_pdf
 from cholesterol_risk_analysis_functions import add_cholesterol_risk_analysis_section_to_pdf
 from countplot_functions import add_countplot_section_to_pdf
 from generate_pdf import generate_statistics_report
@@ -47,6 +48,7 @@ add_violinplot_section_to_pdf(story, df)
 add_countplot_section_to_pdf(story, df)
 add_alcohol_analysis_section_to_pdf(story, df)
 add_cholesterol_risk_analysis_section_to_pdf(story, df)
+add_catplot_analysis_section_to_pdf(story, df)
 
 # Build PDF
 doc.build(story)
