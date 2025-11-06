@@ -3,6 +3,7 @@ from reportlab.lib.pagesizes import elevenSeventeen, letter
 from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.platypus import SimpleDocTemplate
 from boxplot_functions import add_boxplot_section_to_pdf
+from countplot_functions import add_countplot_section_to_pdf
 from generate_pdf import generate_statistics_report
 from histogram_functions import add_histogram_section_to_pdf
 from scatterplot_functions import add_scatterplot_section_to_pdf
@@ -41,6 +42,7 @@ add_histogram_section_to_pdf(story, df)
 add_boxplot_section_to_pdf(story, df)
 add_scatterplot_section_to_pdf(story, df)
 add_violinplot_section_to_pdf(story, df)
+add_countplot_section_to_pdf(story, df)
 
 # Build PDF
 doc.build(story)
