@@ -181,9 +181,7 @@ def generate_scatterplots(df, plot_pairs=[('BMI', 'weight'), ('weight', 'height'
         correlation = calculate_correlation(df, x_feature, y_feature)
         
         chart_paths = {
-            'pandas': create_scatterplot_pandas(df, x_feature, y_feature),
             'seaborn': create_scatterplot_seaborn(df, x_feature, y_feature),
-            'matplotlib': create_scatterplot_matplotlib(df, x_feature, y_feature)
         }
         
         results[(x_feature, y_feature)] = {
@@ -259,23 +257,11 @@ def add_scatterplot_section_to_pdf(story, df, plot_pairs=[('BMI', 'weight'), ('w
         # Add scatter plots
         charts = results[plot_key]['charts']
         
-        # Add pandas scatterplot
-        subheading = Paragraph("Pandas scatter() Method", styles['Heading3'])
-        story.append(subheading)
-        story.append(Spacer(1, 0.1*inch))
-        add_image_to_story(story, charts['pandas'], width=5*inch)
-        
         # Add seaborn scatterplot
         subheading = Paragraph("Seaborn scatterplot() Method", styles['Heading3'])
         story.append(subheading)
         story.append(Spacer(1, 0.1*inch))
         add_image_to_story(story, charts['seaborn'], width=5*inch)
-        
-        # Add matplotlib scatterplot
-        subheading = Paragraph("Matplotlib scatter() Method", styles['Heading3'])
-        story.append(subheading)
-        story.append(Spacer(1, 0.1*inch))
-        add_image_to_story(story, charts['matplotlib'], width=5*inch)
         
         story.append(Spacer(1, 0.3*inch))
     
