@@ -6,6 +6,7 @@ from boxplot_functions import add_boxplot_section_to_pdf
 from generate_pdf import generate_statistics_report
 from histogram_functions import add_histogram_section_to_pdf
 from scatterplot_functions import add_scatterplot_section_to_pdf
+from violinplot_functions import add_violinplot_section_to_pdf
 
 # Load the dataset
 df = pd.read_csv('mlbootcamp5.csv', sep=';')
@@ -39,6 +40,7 @@ generate_statistics_report(df, df_stats, column_info, story)
 add_histogram_section_to_pdf(story, df)
 add_boxplot_section_to_pdf(story, df)
 add_scatterplot_section_to_pdf(story, df)
+add_violinplot_section_to_pdf(story, df)
 
 # Build PDF
 doc.build(story)
