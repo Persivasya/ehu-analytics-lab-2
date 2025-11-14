@@ -63,7 +63,7 @@ def add_column_info_table(story, df_info):
     styles = getSampleStyleSheet()
     
     # Convert DataFrame info to list of lists for Table
-    data = [['Column', 'Type', 'Non-Null Count', 'Dtype']]
+    data = [['Column', 'Type']]
     
     for col in df_info.index:
         dtype_str = str(df_info.loc[col, 'dtype'])

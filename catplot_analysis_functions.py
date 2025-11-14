@@ -37,7 +37,7 @@ def check_binary_balance(df, binary_column, group_column):
     
     # Map gender values to labels
     if group_column == 'gender':
-        plot_data[group_column] = plot_data[group_column].map({1: 'Male', 2: 'Female'})
+        plot_data[group_column] = plot_data[group_column].map({1: 'Female', 2: 'Male'})
     
     balance_stats = {}
     groups = plot_data[group_column].unique()
@@ -117,7 +117,7 @@ def create_catplot_smoking_gender_age(df, age_column='age_years', gender_column=
     plot_data = df[[age_column, gender_column, smoke_column]].copy().dropna()
     
     # Map gender values to labels
-    plot_data[gender_column] = plot_data[gender_column].map({1: 'Male', 2: 'Female'})
+    plot_data[gender_column] = plot_data[gender_column].map({1: 'Female', 2: 'Male'})
     
     # Map smoking values to labels
     plot_data[smoke_column] = plot_data[smoke_column].map({0: 'Non-smoker', 1: 'Smoker'})
@@ -182,7 +182,7 @@ def create_catplot_cholesterol_gender_age(df, age_column='age_years', gender_col
     plot_data = df[[age_column, gender_column, cholesterol_column]].copy().dropna()
     
     # Map gender values to labels
-    plot_data[gender_column] = plot_data[gender_column].map({1: 'Male', 2: 'Female'})
+    plot_data[gender_column] = plot_data[gender_column].map({1: 'Female', 2: 'Male'})
     
     # Map cholesterol values to labels
     cholesterol_mapping = {1: 'Normal', 2: 'Above Normal', 3: 'Well Above Normal'}
@@ -246,7 +246,7 @@ def create_catplot_smoking_balance(df, gender_column='gender', smoke_column='smo
     plot_data = df[[gender_column, smoke_column]].copy().dropna()
     
     # Map values to labels
-    plot_data[gender_column] = plot_data[gender_column].map({1: 'Male', 2: 'Female'})
+    plot_data[gender_column] = plot_data[gender_column].map({1: 'Female', 2: 'Male'})
     plot_data[smoke_column] = plot_data[smoke_column].map({0: 'Non-smoker', 1: 'Smoker'})
     
     # Create catplot
@@ -301,7 +301,7 @@ def create_catplot_cholesterol_balance(df, gender_column='gender',
     plot_data = df[[gender_column, cholesterol_column]].copy().dropna()
     
     # Map values to labels
-    plot_data[gender_column] = plot_data[gender_column].map({1: 'Male', 2: 'Female'})
+    plot_data[gender_column] = plot_data[gender_column].map({1: 'Female', 2: 'Male'})
     cholesterol_mapping = {1: 'Normal', 2: 'Above Normal', 3: 'Well Above Normal'}
     plot_data[cholesterol_column] = plot_data[cholesterol_column].map(cholesterol_mapping)
     
@@ -473,7 +473,7 @@ def add_catplot_analysis_section_to_pdf(story, df, age_column='age_years', gende
     smoking_balance_stats = results['smoking_balance_stats']
     
     smoking_balance_text = "<b>Smoking Balance Statistics:</b><br/>"
-    for group in ['Male', 'Female']:
+    for group in ['Female', 'Male']:
         if group in smoking_balance_stats:
             stats = smoking_balance_stats[group]
             smoking_balance_text += f"""
@@ -508,7 +508,7 @@ def add_catplot_analysis_section_to_pdf(story, df, age_column='age_years', gende
     cholesterol_balance_stats = results['cholesterol_balance_stats']
     
     cholesterol_balance_text = "<b>Cholesterol Balance Statistics:</b><br/>"
-    for group in ['Male', 'Female']:
+    for group in ['Female', 'Male']:
         if group in cholesterol_balance_stats:
             stats = cholesterol_balance_stats[group]
             cholesterol_balance_text += f"""
@@ -535,41 +535,3 @@ def add_catplot_analysis_section_to_pdf(story, df, age_column='age_years', gende
     
     add_image_to_story(story, results['cholesterol_balance_plot'], width=5*inch)
     
-    # Add conclusions
-    conclusion_heading = Paragraph("Conclusions", styles['Heading2'])
-    story.append(conclusion_heading)
-    story.append(Spacer(1, 0.1*inch))
-    
-    # Determine conclusions
-    smoking_balanced = smoking_balance_stats.get('overall', {}).get('is_balanced', False)
-    cholesterol_balanced = cholesterol_balance_stats.get('overall', {}).get('is_balanced', False)
-    
-    conclusion_text = f"""
-    <b>Data Balance Conclusions:</b><br/>
-    
-    <b>Smoking Feature:</b><br/>
-    • The smoking data is {'balanced' if smoking_balanced else 'not balanced'} across gender groups.<br/>
-    • This means that the proportion of smokers vs non-smokers is {'relatively equal' if smoking_balanced else 'unequal'} 
-    between men and women.<br/><br/>
-    
-    <b>Cholesterol Feature:</b><br/>
-    • The cholesterol data is {'balanced' if cholesterol_balanced else 'not balanced'} across gender groups.<br/>
-    • This means that the distribution of cholesterol levels is {'relatively equal' if cholesterol_balanced else 'unequal'} 
-    between men and women.<br/><br/>
-    
-    <b>Methodology:</b><br/>
-    • Used seaborn's catplot() function to visualize quantitative variables across two categorical dimensions (gender and age).<br/>
-    • Analyzed gender correlations with smoking and cholesterol over time (age).<br/>
-    • Examined binary feature balance by comparing proportions across gender groups.<br/>
-    • Balance ratio > 0.4 indicates relatively balanced data.<br/><br/>
-    
-    <b>Key Insights:</b><br/>
-    • The catplot visualizations reveal age-related patterns in smoking and cholesterol by gender.<br/>
-    • Understanding data balance is important for statistical analysis and model building.<br/>
-    • Imbalanced data may require special handling techniques such as stratification or weighting.
-    """
-    
-    para = Paragraph(conclusion_text, styles['Normal'])
-    story.append(para)
-    story.append(Spacer(1, 0.2*inch))
-

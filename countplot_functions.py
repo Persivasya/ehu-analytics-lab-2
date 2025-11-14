@@ -317,64 +317,12 @@ def add_countplot_section_to_pdf(story, df, age_column='age_years', cardio_colum
     
     threshold_info = results['threshold_info']
     
-    if threshold_info['found']:
-        threshold_text = f"""
-        <b>Key Finding:</b><br/>
-        The percentage of individuals with cardiovascular disease surpasses those without it 
-        starting at age <b>{threshold_info['threshold_age']}</b>.<br/><br/>
-        
-        At age {threshold_info['threshold_age']}:<br/>
-        • Percentage with cardiovascular disease: {threshold_info['cardio_disease_percentage']:.2f}%<br/>
-        • Percentage without cardiovascular disease: {threshold_info['no_cardio_disease_percentage']:.2f}%<br/>
-        """
-    else:
-        threshold_text = f"""
-        <b>Analysis Result:</b><br/>
-        {threshold_info.get('note', 'No clear threshold age found.')}<br/><br/>
-        
-        At age {threshold_info['threshold_age']} (closest match):<br/>
-        • Percentage with cardiovascular disease: {threshold_info['cardio_disease_percentage']:.2f}%<br/>
-        • Percentage without cardiovascular disease: {threshold_info['no_cardio_disease_percentage']:.2f}%<br/>
-        """
-    
-    para = Paragraph(threshold_text, styles['Normal'])
-    story.append(para)
-    story.append(Spacer(1, 0.15*inch))
     
     # Add percentage plot
     percentage_heading = Paragraph("Percentage Plot: Cardiovascular Disease by Age", styles['Heading2'])
     story.append(percentage_heading)
     story.append(Spacer(1, 0.1*inch))
     
-    percentage_description = """
-    The percentage plot below shows the trend of cardiovascular disease prevalence by age. 
-    The red dashed line indicates the threshold age where cardiovascular disease percentage 
-    exceeds the no-disease percentage.
-    """
-    para = Paragraph(percentage_description, styles['Normal'])
-    story.append(para)
-    story.append(Spacer(1, 0.1*inch))
     
     add_image_to_story(story, results['percentage_plot_path'], width=5*inch)
     
-    # Add conclusion
-    conclusion_heading = Paragraph("Count Plot Analysis Conclusions", styles['Heading2'])
-    story.append(conclusion_heading)
-    story.append(Spacer(1, 0.1*inch))
-    
-    conclusion_text = """
-    <b>Count Plot Interpretation:</b><br/>
-    • Count plots show the frequency of observations for each category.<br/>
-    • Using hue parameter allows comparison of two groups (with/without cardiovascular disease) side by side.<br/>
-    • The plot reveals age-related patterns in cardiovascular disease prevalence.<br/>
-    • The threshold age analysis identifies the critical age point where disease prevalence becomes dominant.<br/><br/>
-    
-    <b>Clinical Significance:</b><br/>
-    • Understanding the age threshold helps in risk assessment and preventive care planning.<br/>
-    • The percentage analysis provides insights into how disease prevalence changes with age.<br/>
-    • This information can guide age-specific screening and intervention strategies.
-    """
-    para = Paragraph(conclusion_text, styles['Normal'])
-    story.append(para)
-    story.append(Spacer(1, 0.2*inch))
-

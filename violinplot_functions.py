@@ -66,6 +66,8 @@ def prepare_data_for_violinplot(df, value_column, group_column):
     # Return the melted data in long format
     return melted_data[[value_column, group_column]]
 
+def map_gender(gender_column):
+    return {1: 'Female', 2: 'Male'}
 
 def create_violinplot_seaborn(df, value_column, group_column, output_path=None):
     """
@@ -103,11 +105,11 @@ def create_violinplot_seaborn(df, value_column, group_column, output_path=None):
     
     plt.title(f'Violin Plot: {value_column} by {group_column} (seaborn violinplot)', 
               fontsize=14, fontweight='bold')
-    plt.xlabel(group_column, fontsize=12)
+    plt.xlabel(map_gender(group_column), fontsize=12)
     plt.ylabel(value_column, fontsize=12)
     
     # Add legend
-    plt.legend(title=group_column, loc='upper right')
+    plt.legend(title=map_gender(group_column), loc='upper right')
     
     plt.grid(True, alpha=0.3, axis='y')
     plt.tight_layout()
@@ -263,25 +265,4 @@ def add_violinplot_section_to_pdf(story, df, plot_configs=[('height', 'gender')]
         
         story.append(Spacer(1, 0.3*inch))
     
-    # Add overall conclusion
-    conclusion_heading = Paragraph("Violin Plot Analysis Conclusions", styles['Heading2'])
-    story.append(conclusion_heading)
-    story.append(Spacer(1, 0.1*inch))
-    
-    conclusion_text = """
-    <b>Violin Plot Interpretation:</b><br/>
-    • Violin plots combine the benefits of box plots and kernel density estimation.<br/>
-    • The width of the violin at different values shows the density of the data at those values.<br/>
-    • The box plot inside shows quartiles (Q1, median, Q3) and outliers.<br/>
-    • Using scale='count' scales the width of each violin by the number of observations, making it easier to compare groups with different sample sizes.<br/>
-    • The hue parameter allows splitting the data by a categorical variable for comparison.<br/>
-    • Violin plots are particularly useful for comparing distributions across different groups.<br/><br/>
-    
-    <b>Data Preparation:</b><br/>
-    • The data is prepared using pandas melt() function to convert to long format when needed.<br/>
-    • This allows for flexible plotting of different value and group column combinations.
-    """
-    para = Paragraph(conclusion_text, styles['Normal'])
-    story.append(para)
-    story.append(Spacer(1, 0.2*inch))
 

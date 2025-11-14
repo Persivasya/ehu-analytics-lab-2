@@ -265,25 +265,4 @@ def add_scatterplot_section_to_pdf(story, df, plot_pairs=[('BMI', 'weight'), ('w
         
         story.append(Spacer(1, 0.3*inch))
     
-    # Add overall conclusion
-    conclusion_heading = Paragraph("Scatter Plot Analysis Conclusions", styles['Heading2'])
-    story.append(conclusion_heading)
-    story.append(Spacer(1, 0.1*inch))
-    
-    conclusion_text = """
-    <b>Scatter Plot Interpretation:</b><br/>
-    • Scatter plots visualize the relationship between two continuous variables.<br/>
-    • Each point represents a single observation with coordinates (x, y).<br/>
-    • The pattern of points can reveal correlations, trends, clusters, or outliers.<br/>
-    • A positive correlation shows an upward trend, while a negative correlation shows a downward trend.<br/>
-    • The strength of correlation is measured by the Pearson correlation coefficient (ranging from -1 to +1).<br/><br/>
-    
-    <b>Method Comparison:</b><br/>
-    • pandas scatter() provides a simple interface for quick visualization.<br/>
-    • seaborn scatterplot() offers more customization options and better default styling.<br/>
-    • matplotlib scatter() gives the most control over individual plot elements.
-    """
-    para = Paragraph(conclusion_text, styles['Normal'])
-    story.append(para)
-    story.append(Spacer(1, 0.2*inch))
 

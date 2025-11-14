@@ -309,19 +309,4 @@ def add_histogram_section_to_pdf(story, df, features=['age_years', 'weight', 'he
     story.append(conclusion_heading)
     story.append(Spacer(1, 0.1*inch))
     
-    conclusion_text = """
-    <b>Method Comparison:</b><br/>
-    • pandas hist() method provides a simple and quick way to create histograms with customizable bins.<br/>
-    • seaborn histplot() offers more advanced options including automatic bin selection and KDE overlay.<br/>
-    • Different bin values (bandwidth) affect the granularity: fewer bins show broader patterns, more bins show finer details.<br/>
-    • KDE (Kernel Density Estimate) helps visualize the underlying probability distribution.<br/><br/>
-    
-    <b>Distribution Patterns:</b><br/>
-    The histograms reveal the distribution characteristics of each feature, helping identify whether data follows normal, 
-    skewed, or other distribution patterns. This information is crucial for selecting appropriate statistical tests and 
-    understanding the data structure.
-    """
-    para = Paragraph(conclusion_text, styles['Normal'])
-    story.append(para)
-    story.append(Spacer(1, 0.2*inch))
 

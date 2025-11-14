@@ -126,7 +126,7 @@ def create_alcohol_by_gender_countplot(df, age_column='age_years', gender_column
     alcohol_consumers = plot_data[plot_data[alcohol_column] == 1].copy()
     
     # Map gender values to labels (assuming 1=male, 2=female, adjust if needed)
-    gender_mapping = {1: 'Male', 2: 'Female'}
+    gender_mapping = {1: 'Female', 2: 'Male'}
     alcohol_consumers[gender_column] = alcohol_consumers[gender_column].map(gender_mapping)
     
     plt.figure(figsize=(14, 6))
@@ -170,7 +170,7 @@ def calculate_alcohol_consumption_stats(df, gender_column='gender', alcohol_colu
     plot_data = df[[gender_column, alcohol_column]].copy().dropna()
     
     # Map gender values to labels
-    gender_mapping = {1: 'Male', 2: 'Female'}
+    gender_mapping = {1: '', 2: 'Female'}
     plot_data[gender_column] = plot_data[gender_column].map(gender_mapping)
     
     stats = {}
@@ -318,19 +318,6 @@ def add_alcohol_analysis_section_to_pdf(story, df, age_column='age_years',
     story.append(Spacer(1, 0.15*inch))
     
     # Add countplot
-    plot_heading = Paragraph("Count Plot: Alcohol Consumption by Gender and Age", styles['Heading2'])
-    story.append(plot_heading)
-    story.append(Spacer(1, 0.1*inch))
-    
-    description_text = """
-    The count plot below shows the number of people who consume alcohol, divided by gender, 
-    with age on the X-axis. This visualization helps identify age-related patterns in 
-    alcohol consumption between men and women.
-    """
-    para = Paragraph(description_text, styles['Normal'])
-    story.append(para)
-    story.append(Spacer(1, 0.1*inch))
-    
     add_image_to_story(story, results['countplot_path'], width=5*inch)
     
     # Add conclusion
@@ -338,20 +325,4 @@ def add_alcohol_analysis_section_to_pdf(story, df, age_column='age_years',
     story.append(conclusion_heading)
     story.append(Spacer(1, 0.1*inch))
     
-    conclusion_text = """
-    <b>Key Findings:</b><br/>
-    • The count plot reveals the distribution of alcohol consumption across different age groups for each gender.<br/>
-    • By comparing the heights of the bars for men and women at each age, we can see which gender has higher 
-    alcohol consumption rates at different life stages.<br/>
-    • The overall statistics show the total percentage of each gender that reports consuming alcohol.<br/>
-    • This analysis helps understand gender-specific patterns in alcohol consumption behavior.<br/><br/>
-    
-    <b>Methodology:</b><br/>
-    • The analysis uses a generalized countplot function based on create_countplot_seaborn from countplot_functions.py.<br/>
-    • The plot uses age as the X-axis and divides the data by gender using the hue parameter.<br/>
-    • Only individuals who report consuming alcohol (alco=1) are included in the visualization.
-    """
-    para = Paragraph(conclusion_text, styles['Normal'])
-    story.append(para)
-    story.append(Spacer(1, 0.2*inch))
 

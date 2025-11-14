@@ -203,20 +203,3 @@ def add_boxplot_section_to_pdf(story, df, features=['weight', 'height']):
 
         story.append(Spacer(1, 0.3*inch))
     
-    # Add overall conclusion
-    conclusion_heading = Paragraph("Box Plot Analysis Conclusions", styles['Heading2'])
-    story.append(conclusion_heading)
-    story.append(Spacer(1, 0.1*inch))
-    
-    conclusion_text = """
-    <b>Box Plot Interpretation:</b><br/>
-    • The box represents the interquartile range (IQR) from Q1 to Q3, containing the middle 50% of the data.<br/>
-    • The line inside the box represents the median (Q2).<br/>
-    • The whiskers extend to show the range of the data, typically 1.5 * IQR from the box edges.<br/>
-    • Outliers are shown as individual points beyond the whiskers.<br/>
-    • Box plots help identify skewness, outliers, and the spread of the data distribution.<br/><br/>
-    """
-    para = Paragraph(conclusion_text, styles['Normal'])
-    story.append(para)
-    story.append(Spacer(1, 0.2*inch))
-

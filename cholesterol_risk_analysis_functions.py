@@ -530,54 +530,5 @@ def add_cholesterol_risk_analysis_section_to_pdf(story, df, age_column='age_year
     story.append(conclusion_heading)
     story.append(Spacer(1, 0.1*inch))
     
-    # Determine if hypothesis is confirmed or denied
-    rr = risk_ratio_stats['risk_ratio']
-    ci_lower = risk_ratio_stats['ci_lower']
-    ci_upper = risk_ratio_stats['ci_upper']
     
-    # Check if 5 is within the confidence interval
-    if not np.isinf(ci_lower) and not np.isinf(ci_upper):
-        if ci_lower <= 5 <= ci_upper:
-            conclusion = "CONFIRMED"
-            conclusion_detail = f"""
-            The hypothesis is <b>CONFIRMED</b>. The observed risk ratio of {rr:.2f} is consistent 
-            with the hypothesized ratio of 5, as the value 5 falls within the 95% confidence 
-            interval [{ci_lower:.2f}, {ci_upper:.2f}].
-            """
-        elif rr < 5:
-            conclusion = "PARTIALLY CONFIRMED"
-            conclusion_detail = f"""
-            The hypothesis is <b>PARTIALLY CONFIRMED</b>. The observed risk ratio of {rr:.2f} 
-            is lower than the hypothesized ratio of 5, but the data still shows that Group 2 
-            has significantly higher risk than Group 1. The 95% confidence interval is 
-            [{ci_lower:.2f}, {ci_upper:.2f}].
-            """
-        else:
-            conclusion = "DENIED"
-            conclusion_detail = f"""
-            The hypothesis is <b>DENIED</b>. The observed risk ratio of {rr:.2f} is higher 
-            than the hypothesized ratio of 5. The 95% confidence interval is 
-            [{ci_lower:.2f}, {ci_upper:.2f}], which does not include 5.
-            """
-    else:
-        conclusion = "CANNOT DETERMINE"
-        conclusion_detail = """
-        The analysis cannot be completed due to insufficient data in one or both groups. 
-        Please check the group definitions and data availability.
-        """
-    
-    conclusion_text = f"""
-    <b>Hypothesis Status: {conclusion}</b><br/><br/>
-    {conclusion_detail}<br/><br/>
-    
-    <b>Interpretation:</b><br/>
-    • A risk ratio of 5 means Group 2 has 5 times the risk of Group 1.<br/>
-    • If the 95% confidence interval includes 5, the hypothesis is supported by the data.<br/>
-    • The proportion plot shows the actual CVD rates in each group with uncertainty estimates.<br/>
-    • The risk ratio plot visualizes the relative risk with confidence bounds.
-    """
-    
-    para = Paragraph(conclusion_text, styles['Normal'])
-    story.append(para)
-    story.append(Spacer(1, 0.2*inch))
 
